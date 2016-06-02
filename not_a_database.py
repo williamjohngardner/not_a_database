@@ -5,18 +5,22 @@ class NotADatabase:
 
     def login(self):
         print("Please log in: ")
-        while True:
-            username = input("Enter your username: ")
-            password = input("Enter your password: ")
-            with open("notadatabase.csv") as readfile:
-                data = csv.DictReader(readfile, fieldnames=["username", "password", "fullname",
-                                                            "quality", "random"])
-                for row in data:
-                    if row["username"].lower() == username.lower():
-                        if row["password"] == password:
-                            return False
-                else:
-                    print("Username or Password incorrect.  Try again.")
+        username = input("Enter your username: ")
+        password = input("Enter your password: ")
+        with open("notadatabase.csv") as readfile:
+            data = csv.DictReader(readfile, fieldnames=["username", "password", "fullname",
+                                                        "quality", "random"])
+            for row in data:
+                if row["username"].lower() == username.lower():
+                    if row["password"] == password:
+                        NotADatabase().user_choice()
+            else:
+                print("Username or Password incorrect.  Try again.")
+
+    def user_choice(self):
+        user_choice = input("(C)reate new user or (L)ogout?")
+        if user_choice.lower() == "c":
+            NotADatabase().create_user()
 
     def user_name_checker(self, username):
         with open("notadatabase.csv") as readfile:
@@ -40,11 +44,8 @@ class NotADatabase:
         with open("notadatabase.csv", "a") as inputfile:
             inputfile.write(user_input)
 
+        NotADatabase().login()
+
 
 while True:
     NotADatabase().login()
-    user_choice = input("(C)reate new user or (L)ogout?")
-    if user_choice.lower() == "c":
-        NotADatabase().create_user()
-    else:
-        continue
