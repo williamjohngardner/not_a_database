@@ -46,6 +46,5 @@ class NotADatabase:
 
         NotADatabase().login()
 
-
 while True:
     NotADatabase().login()
